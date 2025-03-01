@@ -1,4 +1,5 @@
 markdown
+、```mermaid
 graph TD
     A[開始] --> B{要求ファイル数チェック};
     B -- 3つ以内 --> C{ファイル状態確認};
@@ -14,3 +15,4 @@ graph TD
     L --> C;
     G --> M;
     D --> M;
+```
