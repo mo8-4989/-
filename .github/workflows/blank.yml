@@ -1,0 +1,53 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+          
+markdown
+graph TD
+    A[開始] --> B{要求ファイル数チェック};
+    B -- 3つ以内 --> C{ファイル状態確認};
+    B -- 3つ超 --> D[エラーメッセージ返却];
+    C -- 全て貸出可能 --> E[ファイル貸出処理];
+    C -- 一つでも貸出中 --> F[リクエスト保留];
+    E --> G[ファイル状態更新 (貸出中)];
+    F --> H[保留キューに追加];
+    I[ファイル返却処理] --> J[ファイル状態更新 (貸出可能)];
+    J --> K{保留キュー確認};
+    K -- リクエストあり --> L[保留キューから処理];
+    K -- リクエストなし --> M[終了];
+    L --> C;
+    G --> M;
+    D --> M;
